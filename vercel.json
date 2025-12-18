@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/**/*.ts",
+      "src": "api/**/*.js",
       "use": "@vercel/node"
     },
     {
@@ -12,20 +12,20 @@
   ],
   "routes": [
     {
-      "src": "/",
-      "dest": "/public/index.html"
-    },
-    {
-      "src": "/history",
-      "dest": "/public/history.html"
-    },
-    {
       "src": "/api/(.*)",
       "dest": "/api/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/public/$1"
+      "dest": "/public/$1",
+      "headers": {
+        "Access-Control-Allow-Origin": "*"
+      }
     }
-  ]
+  ],
+  "functions": {
+    "api/**/*.js": {
+      "maxDuration": 10
+    }
+  }
 }
