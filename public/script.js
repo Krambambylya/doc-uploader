@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       updateProgress(30, "Загрузка файла...");
 
-      const response = await fetch("./api/upload", {
+      const response = await fetch("/api/upload", {
         method: "POST",
         body: formData,
       });
