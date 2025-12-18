@@ -3,7 +3,16 @@ import multer from "multer";
 import { initStorage, saveFile, saveUploadInfo } from "../utils/storage";
 import { sendToWebhook } from "../utils/webhook";
 import { UploadedDocument, WebhookPayload } from "../types";
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
+
+let uuidv4: any;
+import("uuid")
+  .then((module) => {
+    uuidv4 = module.v4;
+  })
+  .catch((err) => {
+    console.error("Failed to import uuid:", err);
+  });
 
 // Настройка multer для обработки файлов в памяти
 const upload = multer({
