@@ -1,0 +1,447 @@
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --secondary: #64748b;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --background: #f8fafc;
+  --card: #ffffff;
+  --text: #1e293b;
+  --border: #e2e8f0;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, sans-serif;
+  background: var(--background);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+header p {
+  color: var(--secondary);
+  font-size: 1.1rem;
+}
+
+/* Карточка загрузки */
+.upload-card {
+  background: var(--card);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 2rem;
+}
+
+.upload-area {
+  border: 2px dashed var(--border);
+  border-radius: 0.75rem;
+  padding: 3rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+.upload-area:hover {
+  border-color: var(--primary);
+  background: rgba(37, 99, 235, 0.02);
+}
+
+.upload-area i {
+  font-size: 3rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.upload-area h3 {
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.upload-area p {
+  color: var(--secondary);
+  margin-bottom: 1.5rem;
+}
+
+#fileInput {
+  display: none;
+}
+
+/* Информация о файле */
+.file-info {
+  background: var(--background);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.file-preview {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.file-preview i {
+  font-size: 2rem;
+  color: var(--primary);
+}
+
+.file-preview h4 {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Форма */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-group small {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--secondary);
+  font-size: 0.875rem;
+}
+
+/* Кнопки */
+.btn-primary,
+.btn-secondary,
+.btn-outline,
+.btn-icon {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  width: 100%;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-dark);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: var(--background);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background: var(--border);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  text-decoration: none;
+}
+
+.btn-outline:hover {
+  background: rgba(37, 99, 235, 0.1);
+}
+
+.btn-icon {
+  background: transparent;
+  color: var(--secondary);
+  padding: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.btn-icon:hover {
+  color: var(--danger);
+}
+
+/* Прогресс бар */
+.progress-container {
+  margin: 1.5rem 0;
+}
+
+.progress-bar {
+  height: 0.5rem;
+  background: var(--border);
+  border-radius: 0.25rem;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--primary);
+  width: 0%;
+  transition: width 0.3s ease;
+  border-radius: 0.25rem;
+}
+
+#progressText {
+  text-align: center;
+  color: var(--secondary);
+}
+
+/* Результат */
+.result {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.result.success {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.result.error {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* История */
+.controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+
+.search-box {
+  flex: 1;
+  position: relative;
+}
+
+.search-box i {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--secondary);
+}
+
+.search-box input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 3rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+.table-container {
+  overflow-x: auto;
+  background: var(--card);
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  background: var(--background);
+  font-weight: 600;
+  color: var(--text);
+}
+
+td .file-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+td .file-icon {
+  font-size: 1.5rem;
+  color: var(--primary);
+}
+
+.status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.status.completed {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success);
+}
+
+.status.processing {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--warning);
+}
+
+.status.failed {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
+}
+
+.status.pending {
+  background: rgba(100, 116, 139, 0.1);
+  color: var(--secondary);
+}
+
+.actions-cell {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 3rem;
+  color: var(--secondary);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.empty-state i {
+  font-size: 4rem;
+  color: var(--border);
+  margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.empty-state p {
+  color: var(--secondary);
+  margin-bottom: 1.5rem;
+}
+
+/* Футер */
+footer {
+  margin-top: auto;
+  text-align: center;
+  padding-top: 2rem;
+  color: var(--secondary);
+  font-size: 0.875rem;
+}
+
+.actions {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+
+  .upload-card {
+    padding: 1.5rem;
+  }
+
+  .upload-area {
+    padding: 2rem 1rem;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  table {
+    font-size: 0.875rem;
+  }
+
+  th,
+  td {
+    padding: 0.75rem;
+  }
+}

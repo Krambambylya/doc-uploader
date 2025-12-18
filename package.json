@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod",
+    "build": "tsc",
+    "start": "node dist/api/server.js"
+  },
+  "dependencies": {
+    "@types/multer": "^2.0.0",
+    "@vercel/node": "^5.5.15",
+    "axios": "^1.13.2",
+    "multer": "^2.0.2",
+    "uuid": "^13.0.0"
+  }
+}
