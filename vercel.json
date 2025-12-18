@@ -12,20 +12,20 @@
   ],
   "routes": [
     {
+      "src": "/",
+      "dest": "/public/index.html"
+    },
+    {
+      "src": "/history",
+      "dest": "/public/history.html"
+    },
+    {
       "src": "/api/(.*)",
       "dest": "/api/$1"
     },
     {
       "src": "/(.*)",
-      "dest": "/public/$1",
-      "headers": {
-        "Access-Control-Allow-Origin": "*"
-      }
+      "dest": "/public/$1"
     }
-  ],
-  "functions": {
-    "api/**/*.js": {
-      "maxDuration": 10
-    }
-  }
+  ]
 }
