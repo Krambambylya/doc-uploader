@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "@types/multer": "^2.0.0",
+    "@types/uuid": "^11.0.0",
     "@vercel/node": "^5.5.15",
     "axios": "^1.13.2",
     "multer": "^2.0.2",
