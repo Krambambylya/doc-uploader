@@ -30,6 +30,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   // Используем multer для обработки файла
+  // Multer автоматически парсит текстовые поля в req.body
   const multerSingle = upload.single("document");
 
   multerSingle(req as any, res as any, async (err: any) => {
@@ -41,11 +42,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const file = (req as any).file;
-    const webhookUrl = req.body.webhookUrl;
+    // Multer парсит текстовые поля multipart/form-data в req.body
+    const webhookUrl = (req as any).body?.webhookUrl;
 
     if (!file) {
       return res.status(400).json({ error: "No file uploaded" });
     }
+
+    // Логирование для отладки (можно удалить в продакшене)
+    console.log("Upload request:", {
+      filename: file.originalname,
+      size: file.size,
+      hasWebhookUrl: !!webhookUrl,
+    });
 
     try {
       // Генерируем уникальный ID

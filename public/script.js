@@ -130,6 +130,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
       updateProgress(70, "Отправка вебхука...");
 
+      // Проверяем, что ответ действительно JSON
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        const text = await response.text();
+        throw new Error(
+          `Сервер вернул неожиданный ответ (${
+            response.status
+          }): ${text.substring(0, 100)}`
+        );
+      }
+
       const data = await response.json();
 
       if (data.success) {
