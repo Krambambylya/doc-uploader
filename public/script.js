@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
         body: n8nFormData,
       });
       updateProgress(100, "Загрузка завершена");
-      showResult(`Файл "${data.filename}" успешно загружен.`, true);
+      showResult(`Файл "${n8nFormData.filename}" успешно загружен.`, true);
     } catch (error) {
       console.error("Upload error:", error);
       showResult(`Ошибка загрузки: ${error.message}`, false);
@@ -280,12 +280,12 @@ document.addEventListener("DOMContentLoaded", function () {
   uploadBtn.addEventListener("click", uploadFile);
 
   // Валидация URL при вводе
-  webhookUrl.addEventListener("input", () => {
-    const url = webhookUrl.value.trim();
-    if (url && !isValidUrl(url)) {
-      webhookUrl.style.borderColor = "#ef4444";
-    } else {
-      webhookUrl.style.borderColor = "";
-    }
-  });
+  // webhookUrl.addEventListener("input", () => {
+  //   const url = webhookUrl.value.trim();
+  //   if (url && !isValidUrl(url)) {
+  //     webhookUrl.style.borderColor = "#ef4444";
+  //   } else {
+  //     webhookUrl.style.borderColor = "";
+  //   }
+  // });
 });
