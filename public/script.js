@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
     updateProgress(0, "Подготовка к загрузке...");
 
     // Реализация отправки файла в n8n webhook как двоичный файл (multipart/form-data)
-    const n8nUrl = "https://n8n-stroyset.amvera.io/webhook-test/upload-file";
+    const n8nUrl = "https://n8n-stroyset.amvera.io/webhook/upload-file";
 
     // Для отправки именно двоичного файла в multipart/form-data
     const n8nFormData = new FormData();
