@@ -114,6 +114,21 @@ document.addEventListener("DOMContentLoaded", function () {
     uploadBtn.disabled = true;
     updateProgress(0, "Подготовка к загрузке...");
 
+    // Реализация отправки файла в n8n webhook как двоичный файл (multipart/form-data)
+    const n8nUrl = "https://n8n-stroyset.amvera.io/webhook-test/upload-file";
+
+    // Для отправки именно двоичного файла в multipart/form-data
+    const n8nFormData = new FormData();
+    n8nFormData.append("file", selectedFile, selectedFile.name);
+    // Можно добавить и другие поля, если нужно:
+    // n8nFormData.append("webhookUrl", hookUrl);
+
+    // Формируем fetch-запрос (без авторизации, если не нужна)
+    const response = await fetch(n8nUrl, {
+      method: "POST",
+      body: n8nFormData,
+    });
+
     try {
       const formData = new FormData();
       formData.append("document", selectedFile);
@@ -123,10 +138,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
       updateProgress(30, "Загрузка файла...");
 
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
+      // const response = await fetch("/api/upload", {
+      //   method: "POST",
+      //   body: formData,
+      // });
 
       updateProgress(70, "Отправка вебхука...");
 
@@ -154,9 +169,9 @@ document.addEventListener("DOMContentLoaded", function () {
         showResult(message, true);
 
         // Автопереход на историю через 3 секунды
-        setTimeout(() => {
-          window.location.href = "/history";
-        }, 3000);
+        // setTimeout(() => {
+        //   window.location.href = "/history";
+        // }, 3000);
       } else {
         throw new Error(data.error || "Неизвестная ошибка");
       }
