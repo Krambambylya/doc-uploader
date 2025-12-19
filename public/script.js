@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
         body: n8nFormData,
       });
       updateProgress(100, "Загрузка завершена");
-      showResult(`Файл "${n8nFormData.filename}" успешно загружен.`, true);
+      showResult(`Файл успешно загружен.`, true);
     } catch (error) {
       console.error("Upload error:", error);
       showResult(`Ошибка загрузки: ${error.message}`, false);
