@@ -141,27 +141,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Формируем fetch-запрос (без авторизации, если не нужна)
     updateProgress(30, "Загрузка файла...");
-    const response = await fetch(n8nUrl, {
-      method: "POST",
-      body: n8nFormData,
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(
-        `Ошибка при отправке файла: ${response.status} ${errorText}`
-      );
-    }
-
-    const data = await response.json();
-    console.log("N8N response:", data);
-
-    if (data.success) {
+    try {
+      await fetch(n8nUrl, {
+        method: "POST",
+        body: n8nFormData,
+      });
       updateProgress(100, "Загрузка завершена");
       showResult(`Файл "${data.filename}" успешно загружен.`, true);
-    } else {
-      throw new Error(data.error || "Неизвестная ошибка при загрузке файла");
+    } catch (error) {
+      console.error("Upload error:", error);
+      showResult(`Ошибка загрузки: ${error.message}`, false);
     }
+
+    // if (!response.ok) {
+    //   const errorText = await response.text();
+    //   throw new Error(
+    //     `Ошибка при отправке файла: ${response.status} ${errorText}`
+    //   );
+    // }
+
+    // const data = await response.json();
+    // console.log("N8N response:", data);
+
+    // if (data.success) {
+    //   updateProgress(100, "Загрузка завершена");
+    //   showResult(`Файл "${data.filename}" успешно загружен.`, true);
+    // } else {
+    //   throw new Error(data.error || "Неизвестная ошибка при загрузке файла");
+    // }
 
     // try {
     //   const formData = new FormData();
