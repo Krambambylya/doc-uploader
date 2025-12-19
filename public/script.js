@@ -103,16 +103,32 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!selectedFile) return;
 
     // Валидация URL вебхука
-    const hookUrl = webhookUrl.value.trim();
-    if (hookUrl && !isValidUrl(hookUrl)) {
-      showResult("Некорректный URL вебхука", false);
-      return;
-    }
+    // const hookUrl = webhookUrl.value.trim();
+    // if (hookUrl && !isValidUrl(hookUrl)) {
+    //   showResult("Некорректный URL вебхука", false);
+    //   return;
+    // }
 
     // Показываем прогресс
     progressContainer.style.display = "block";
     uploadBtn.disabled = true;
     updateProgress(0, "Подготовка к загрузке...");
+
+    // Проверка формата файла
+    const allowedExtensions = [".pdf", ".txt", ".docx", ".xlsx", ".csv"];
+    const fileNameLower = selectedFile.name.toLowerCase();
+    const isAllowed = allowedExtensions.some((ext) =>
+      fileNameLower.endsWith(ext)
+    );
+    if (!isAllowed) {
+      showResult(
+        "Недопустимый формат файла. Разрешены только PDF, TXT, DOCX, XLSX, CSV.",
+        false
+      );
+      uploadBtn.disabled = false;
+      progressContainer.style.display = "none";
+      return;
+    }
 
     // Реализация отправки файла в n8n webhook как двоичный файл (multipart/form-data)
     const n8nUrl = "https://n8n-stroyset.amvera.io/webhook/upload-file";
@@ -124,67 +140,85 @@ document.addEventListener("DOMContentLoaded", function () {
     // n8nFormData.append("webhookUrl", hookUrl);
 
     // Формируем fetch-запрос (без авторизации, если не нужна)
+    updateProgress(30, "Загрузка файла...");
     const response = await fetch(n8nUrl, {
       method: "POST",
       body: n8nFormData,
     });
 
-    try {
-      const formData = new FormData();
-      formData.append("document", selectedFile);
-      if (hookUrl) {
-        formData.append("webhookUrl", hookUrl);
-      }
-
-      updateProgress(30, "Загрузка файла...");
-
-      // const response = await fetch("/api/upload", {
-      //   method: "POST",
-      //   body: formData,
-      // });
-
-      updateProgress(70, "Отправка вебхука...");
-
-      // Проверяем, что ответ действительно JSON
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        const text = await response.text();
-        throw new Error(
-          `Сервер вернул неожиданный ответ (${
-            response.status
-          }): ${text.substring(0, 100)}`
-        );
-      }
-
-      const data = await response.json();
-
-      if (data.success) {
-        updateProgress(100, "Загрузка завершена!");
-
-        let message = `Файл "${data.filename}" успешно загружен. `;
-        if (data.webhookSent) {
-          message += `Вебхук отправлен: ${data.webhookResponse}`;
-        }
-
-        showResult(message, true);
-
-        // Автопереход на историю через 3 секунды
-        // setTimeout(() => {
-        //   window.location.href = "/history";
-        // }, 3000);
-      } else {
-        throw new Error(data.error || "Неизвестная ошибка");
-      }
-    } catch (error) {
-      console.error("Upload error:", error);
-      showResult(`Ошибка загрузки: ${error.message}`, false);
-    } finally {
-      setTimeout(() => {
-        progressContainer.style.display = "none";
-        uploadBtn.disabled = false;
-        updateProgress(0, "Загрузка...");
-      }, 2000);
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(
+        `Ошибка при отправке файла: ${response.status} ${errorText}`
+      );
     }
+
+    const data = await response.json();
+    console.log("N8N response:", data);
+
+    if (data.success) {
+      updateProgress(100, "Загрузка завершена");
+      showResult(`Файл "${data.filename}" успешно загружен.`, true);
+    } else {
+      throw new Error(data.error || "Неизвестная ошибка при загрузке файла");
+    }
+
+    // try {
+    //   const formData = new FormData();
+    //   formData.append("document", selectedFile);
+    //   if (hookUrl) {
+    //     formData.append("webhookUrl", hookUrl);
+    //   }
+
+    //   updateProgress(30, "Загрузка файла...");
+
+    //   // const response = await fetch("/api/upload", {
+    //   //   method: "POST",
+    //   //   body: formData,
+    //   // });
+
+    //   updateProgress(70, "Отправка вебхука...");
+
+    //   // Проверяем, что ответ действительно JSON
+    //   const contentType = response.headers.get("content-type");
+    //   if (!contentType || !contentType.includes("application/json")) {
+    //     const text = await response.text();
+    //     throw new Error(
+    //       `Сервер вернул неожиданный ответ (${
+    //         response.status
+    //       }): ${text.substring(0, 100)}`
+    //     );
+    //   }
+
+    //   const data = await response.json();
+
+    //   if (data.success) {
+    //     updateProgress(100, "Загрузка завершена!");
+
+    //     let message = `Файл "${data.filename}" успешно загружен. `;
+    //     if (data.webhookSent) {
+    //       message += `Вебхук отправлен: ${data.webhookResponse}`;
+    //     }
+
+    //     showResult(message, true);
+
+    //     // Автопереход на историю через 3 секунды
+    //     // setTimeout(() => {
+    //     //   window.location.href = "/history";
+    //     // }, 3000);
+    //   } else {
+    //     throw new Error(data.error || "Неизвестная ошибка");
+    //   }
+    // } catch (error) {
+    //   console.error("Upload error:", error);
+    //   showResult(`Ошибка загрузки: ${error.message}`, false);
+    // } finally {
+    //   setTimeout(() => {
+    //     progressContainer.style.display = "none";
+    //     uploadBtn.disabled = false;
+    //     updateProgress(0, "Загрузка...");
+    //   }, 2000);
+    // }
   }
 
   // Обработчики событий

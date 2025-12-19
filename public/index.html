@@ -28,7 +28,7 @@
             <input
               type="file"
               id="fileInput"
-              accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png"
+              accept=".pdf,.txt,.docx,.xlsx,.csv"
             />
             <button id="browseBtn" class="btn-secondary">
               <i class="fas fa-folder-open"></i> Выбрать файл
@@ -48,7 +48,7 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="webhookUrl">
               <i class="fas fa-link"></i> Вебхук URL (опционально)
             </label>
@@ -58,7 +58,7 @@
               placeholder="https://ваш-вебхук.example.com/endpoint"
             />
             <small>Если оставить пустым, файл только сохранится</small>
-          </div>
+          </div> -->
 
           <button id="uploadBtn" class="btn-primary" disabled>
             <i class="fas fa-upload"></i> Загрузить документ
@@ -78,16 +78,16 @@
           <div class="result" id="result" style="display: none"></div>
         </div>
 
-        <div class="actions">
+        <!-- <div class="actions">
           <a href="/history" class="btn-outline">
             <i class="fas fa-history"></i> Посмотреть историю загрузок
           </a>
-        </div>
+        </div> -->
       </main>
 
-      <footer>
+      <!-- <footer>
         <p>Документы хранятся 7 дней. Максимальный размер: 10MB</p>
-      </footer>
+      </footer> -->
     </div>
 
     <script src="/script.js"></script>
